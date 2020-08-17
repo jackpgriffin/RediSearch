@@ -5,7 +5,7 @@
 ### Format
 ```
   FT.CREATE {index} 
-    [ON {structure}]
+    ON {structure} 
        [PREFIX {count} {prefix} [{prefix} ..]
        [FILTER {filter}]
        [LANGUAGE {default_lang}]
@@ -49,7 +49,7 @@ FT.CREATE idx SCHEMA name TEXT SORTABLE age NUMERIC SORTABLE myTag TAG SORTABLE
 
 * **index**: the index name to create. If it exists the old spec will be overwritten
 
-* **ON {structure}** currently supports only HASH (default)
+* **ON {structure}** currently supports only HASH
 
 * **PREFIX {count} {prefix}** tells the index which keys it should index. You can add several prefixes to index. Since the argument is optional, the default is * (all keys)
 
@@ -1254,6 +1254,8 @@ An array, in which each element represents a misspelled term from the query. The
 Each misspelled term, in turn, is a 3-element array consisting of the constant string "TERM", the term itself and an array of suggestions for spelling corrections.
 
 Each element in the spelling corrections array consists of the score of the suggestion and the suggestion itself. The suggestions array, per misspelled term, is ordered in descending order by score.
+
+The score is calculated by dividing the number of documents in which the suggested term exists, by the total number of documents in the index. Results can be normalized by dividing scores by the highest score.
 
 ### Example output
 
